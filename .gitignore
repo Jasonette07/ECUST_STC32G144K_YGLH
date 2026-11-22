@@ -1,0 +1,33 @@
+# Keil / MDK generated output
+project/mdk/out_file/
+project/mdk/*.uvgui.*
+project/mdk/*.bak
+project/mdk/*.dep
+project/mdk/*.build_log.htm
+
+# Common build artifacts
+*.o
+*.obj
+*.d
+*.elf
+*.axf
+*.hex
+*.bin
+*.map
+*.lst
+*.crf
+*.iex
+*.lnp
+*.__i
+
+# IDE and OS files
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+.DS_Store
+Thumbs.db
+
+# Local/internal notes
+project/code/.learnings/

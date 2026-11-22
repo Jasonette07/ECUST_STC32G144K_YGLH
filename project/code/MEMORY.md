@@ -1,0 +1,7 @@
+- [打靶细筛与亮度对比度](.learnings/target-fine-scan-brightness.md) — 白中心→黑环对比度在过亮场景跌破 IS_EDGE 阈值导致细筛失效
+- [打靶三激光瞄准方案](.learnings/target-three-laser-aiming.md) — 三激光分区瞄准方案设计与 Target_Gimbal_Aim 接口
+- [三激光开火逻辑审查](.learnings/three-laser-fire-logic.md) — 激光函数不互斥、分区有空洞、else 缺失等问题
+- [十字路口状态机分析](.learnings/crossroad-state-machine-analysis.md) — 5 状态状态机详解、左拐根因、IS_EDGE 反光失效
+- [MT9V03X 曝光时间与图像增益配置](.learnings/mt9v03x-exposure-gain-config.md) — 曝光/增益权衡原则、过亮/过暗调参指南、API 速查
+- [出赛道判定与斑马线检测](.learnings/out-of-track-and-zebra-detection.md) — OUT_GRAY_THRESHOLD 写死 100 与 current_white 自适应不一致、THRESHOLD_ZEBRA 未使用、斑马线应判高频跳变而非均值
+- [盲盒预减速：第 N-1 个靶子触发减速](.learnings/blind-box-n-minus-1-decel.md) — stop_box 标志 + stop_speed 宏，在 STOP_TARGET_NUM-1 时降速解决刹不住
