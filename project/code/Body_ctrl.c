@@ -7,10 +7,6 @@ void Servo_Control_Process(float Image_err)
     
     pid_out = Servo_PidLocCtrl(&Servo_PID, Image_err, imu660ra_gyro_z);
     final_angle = SERVO_MOTOR_MID + pid_out;
-
-    if (final_angle > SERVO_MOTOR_LMAX) final_angle = SERVO_MOTOR_LMAX;
-    if (final_angle < SERVO_MOTOR_RMAX) final_angle = SERVO_MOTOR_RMAX;
-
     Steer_set(final_angle);
 
 
@@ -19,7 +15,7 @@ void Servo_Control_Process(float Image_err)
 void PID_Scheduler(void)
 {
     float kp_fuzzy, kd_fuzzy;
-    //Ä£ï¿½ï¿½pid
+    //Ä£ºýpid
     get_updataPD_pid((float)posi, &kp_fuzzy, &kd_fuzzy);
     Servo_PID.Kp = kp_fuzzy;
     Servo_PID.Kd = kd_fuzzy;
@@ -34,7 +30,7 @@ void get_updataPD_pid (float er, float *kp, float *kd)
 
 float Target_Speed_L = 0.0f;
 float Target_Speed_R = 0.0f;
-float ackCoeff = ACK_COEFF_DEFAULT; //Ä¬ï¿½Ï²ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+float ackCoeff = ACK_COEFF_DEFAULT; //Ä¬ÈÏ²îËÙÏµÊý
 #define DIFF_K1  0.0322f
 #define DIFF_K2  0.000088f
 #define INNER_RATIO_MIN  0.5f      
@@ -46,17 +42,17 @@ void realDiff(float base_speed, float current_angle)
     float inner_ratio;
     float outer_speed, inner_speed;
     float omega_corr;    
-    //1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù±ï¿½
+    //1. »ù´¡²îËÙ±È
     inner_ratio = 1.0f - DIFF_K1 * abs_dev + DIFF_K2 * abs_dev * abs_dev;
     inner_ratio = 1.0f - (1.0f - inner_ratio) * ackCoeff;    
-    //2. ï¿½ï¿½ï¿½Ù¶È±Õ»ï¿½Ë«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //2. ½ÇËÙ¶È±Õ»·Ë«ÏòÐÞÕý
     omega_corr = omega_assist(current_angle);
     inner_ratio -= omega_corr;	
-    //3. ï¿½ï¿½ï¿½Þ±ï¿½ï¿½ï¿½ 
+    //3. ÏÂÏÞ±£»¤ 
     if (inner_ratio < 0.0f) inner_ratio = 0.0f;
-    //ï¿½ï¿½ï¿½Þ±ï¿½ï¿½ï¿½ 
+    //ÉÏÏÞ±£»¤ 
     if (inner_ratio > 1.0f) inner_ratio = 1.0f;   
-    //4. Æ½ï¿½ï¿½ï¿½Ù¶È»ï¿½×¼ï¿½ï¿½ï¿½ï¿½
+    //4. Æ½¾ùËÙ¶È»ù×¼·ÖÅä
     outer_speed = 2.0f * base_speed / (1.0f + inner_ratio);
     inner_speed = outer_speed * inner_ratio;
     
@@ -81,7 +77,7 @@ float calc_target_omega_dps(float v, float servo_angle)
     float dev = servo_angle - SERVO_MOTOR_MID;
     float wheel_angle_rad = dev * STEERING_RATIO * 0.01745f;
     float omega_rad = v * tan(wheel_angle_rad) / LDISTANCE;   //rad/s    
-    //rad/s ï¿½ï¿½ dps (ï¿½ï¿½/ï¿½ï¿½): ï¿½ï¿½ 180/ï¿½ï¿½ = 57.2958
+    //rad/s ¡ú dps (¶È/Ãë): ³Ë 180/¦Ð = 57.2958
     return omega_rad * 57.2958f;
 }
 
@@ -91,33 +87,33 @@ float omega_assist(float servo_angle)
     float omega_target;
     float omega_actual;
     float abs_target, abs_actual;
-    float force_error;       //×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    float force_error;       //×ªÏòÁ¦¶ÈÎó²î
     float correction;
     
     v_now = ((float)LA_SPEED + (float)RA_SPEED) / 2.0f * SPEED_TO_MMPS;
     omega_target = calc_target_omega_dps(v_now, servo_angle);
     omega_actual = current_gyro_z_dps;
     
-    //×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = ï¿½ï¿½ï¿½Ù¶È¾ï¿½ï¿½ï¿½Öµ
+    //×ªÏòÁ¦¶È = ½ÇËÙ¶È¾ø¶ÔÖµ
     abs_target = (omega_target < 0) ? -omega_target : omega_target;
     abs_actual = (omega_actual < 0) ? -omega_actual : omega_actual;
     
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: >0 ×ªï¿½ï¿½ï¿½ï¿½(ï¿½Ó´ï¿½ï¿½ï¿½ï¿½), <0 ×ªï¿½ï¿½Í·(ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½)
+    //Á¦¶ÈÎó²î: >0 ×ª²»¹»(¼Ó´ó²îËÙ), <0 ×ª¹ýÍ·(¼õÐ¡²îËÙ)
     force_error = abs_target - abs_actual;
     correction = Omega_PidCtrl(&Omega_PID, abs_target, abs_actual);
     return correction;
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²ï¿½ï¿½ï¿½
+//µç»ú¿ØÖÆ²ßÂÔ
 void motorSpeedPidControl(float set_speed)
 {
     float pwm_L, pwm_R;
     encoder_pulse_get(); 	
-	//ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
+	//ÕæÊµ²îËÙ
     realDiff(set_speed, final_angle);
     pwm_L = PidIncCtrl(&LM_PID, Target_Speed_L, (float)LA_SPEED);
     pwm_R = PidIncCtrl(&RM_PID, Target_Speed_R, (float)RA_SPEED);
-    //ï¿½Þ²ï¿½ï¿½ï¿½
+    //ÎÞ²îËÙ
     // pwm_L = PidIncCtrl(&LM_PID, set_speed, (float)LA_SPEED);
     // pwm_R = PidIncCtrl(&RM_PID, set_speed, (float)RA_SPEED);
     DRV8701_ctrl((int16)pwm_L, (int16)pwm_R);   
@@ -127,11 +123,11 @@ void motorSpeedLadrcControl(float set_speed)
 {
     float pwm_L, pwm_R;
     encoder_pulse_get();     
-    //ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
+    //ÕæÊµ²îËÙ
     realDiff(set_speed, final_angle);
     pwm_L = LadrcCtrl(&LM_LADRC, Target_Speed_L, (float)LA_SPEED);
     pwm_R = LadrcCtrl(&RM_LADRC, Target_Speed_R, (float)RA_SPEED);
-    //ï¿½Þ²ï¿½ï¿½ï¿½
+    //ÎÞ²îËÙ
     // pwm_L  = LadrcCtrl(&LM_LADRC, set_speed, (float)LA_SPEED);
     // pwm_R = LadrcCtrl(&RM_LADRC, set_speed, (float)RA_SPEED);  
     DRV8701_ctrl((int16)pwm_L, (int16)pwm_R);   
@@ -139,7 +135,7 @@ void motorSpeedLadrcControl(float set_speed)
 
 
 
-static uint8 laser_state = 0;       //0=ï¿½ï¿½, 1=ï¿½ï¿½
+static uint8 laser_state = 0;       //0=¹Ø, 1=¿ª
 
 void laser_toggle_by_key(void)
 {
@@ -160,20 +156,20 @@ void laser_toggle_by_key(void)
         }
     }
 }
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»ï¿½ë°´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//·¢³µ±êÖ¾Î»Óë°´¼ü¿ØÖÆ
 volatile uint8 car_run_flag = 0;
 extern volatile uint16 start_delay_ms;
 
 void Car_State_Update(void)
 {
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½/Í£ï¿½ï¿½
+    //°´¼ü´¦Àí: ÇÐ»»·¢³µ/Í£³µ
     if(key1_flag == 1)
     {
         KEY1_clear();
         
         if(car_run_flag == 0)
         {
-            start_delay_ms = 500;//500msï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+            start_delay_ms = 500;//500msµ¹¼ÆÊ±·¢³µ
             Buzzer_check1(50);
         }
         else
@@ -184,7 +180,7 @@ void Car_State_Update(void)
         }
     }
 
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
+    //³µ¿ØÂß¼­
     if(car_run_flag == 1)
     {
         PID_Scheduler();
@@ -207,12 +203,12 @@ void Car_State_Update(void)
     }
 }
 
-void pit_handler(void)//ï¿½ï¿½Ê±ï¿½ï¿½isr
+void pit_handler(void)//¶¨Ê±Æ÷isr
 {
 
     Key_scan();
-    //encoder_pulse_get();        // ï¿½È¸ï¿½ï¿½ï¿½ LA_SPEED / RA_SPEED
-    //Encoder_Accumulate();           //ï¿½ï¿½ï¿½Û¼Óµï¿½ï¿½ê¶¨ï¿½ï¿½ï¿½ï¿½
+    //encoder_pulse_get();        // ÏÈ¸üÐÂ LA_SPEED / RA_SPEED
+    //Encoder_Accumulate();           //ÔÙÀÛ¼Óµ½±ê¶¨±äÁ¿
     //laser_toggle_by_key();
     Gyro_Update();
     Car_State_Update();

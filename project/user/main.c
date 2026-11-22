@@ -5,10 +5,10 @@ void main(void)
 {
 	uint16 cnt = 0;
 	char buf[32];
-    clock_init(SYSTEM_CLOCK_96M); 				// Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ÏµÍ³ï¿½ï¿½Ê¼ï¿½ï¿½<ï¿½ï¿½Ø±ï¿½ï¿½ï¿½>
-    debug_init();                       		// ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¼ï¿½ï¿½
-    //ï¿½Ë´ï¿½ï¿½ï¿½Ð´ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    //gpio_init(IO_P61, GPO, GPIO_LOW, GPO_PUSH_PULL);  //ï¿½ï¿½ï¿½ Ä¬ï¿½ÏµÍµï¿½Æ½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½
+    clock_init(SYSTEM_CLOCK_96M); 				// Ê±ÖÓÅäÖÃ¼°ÏµÍ³³õÊ¼»¯<Îñ±Ø±£Áô>
+    debug_init();                       		// µ÷ÊÔ´®¿ÚÐÅÏ¢³õÊ¼»¯
+    //´Ë´¦±àÐ´ÓÃ»§´úÂë ÀýÈçÍâÉè³õÊ¼»¯´úÂëµÈ
+    //gpio_init(IO_P61, GPO, GPIO_LOW, GPO_PUSH_PULL);  //Êä³ö Ä¬ÈÏµÍµçÆ½ ÍÆÍìÊä³öÄ£Ê½
     Buzzer_init();
     Key_init();	
     Steer_init();
@@ -29,7 +29,7 @@ void main(void)
   	pit_ms_init(TIM0_PIT, 5, pit_handler);
 	interrupt_set_priority(TIMER0_IRQn, 0);
 	Esc_init();
-    Buzzer_check(100);//ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½
+    Buzzer_check(100);//ÉÏµçÃù½Ð1Ãë
 	
     
 
@@ -49,12 +49,12 @@ void main(void)
 
         
        // printf("%d,%d,%d\r\n",imu660ra_gyro_x, imu660ra_gyro_y, imu660ra_gyro_z);
-        //Æ«ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½
+        //Æ«º½½Ç²âÊÔ
         // printf("Yaw: %.2f\r\n", yaw_total);
         // system_delay_ms(500);
 		//Esc_set(600);
 //		cnt++;	
-//  if (cnt >= 50)  // 250ms Ò»ï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
+//  if (cnt >= 50)  // 250ms Ò»´Î£¬²»ÍÏÖ÷Ñ­»·
 //  {
 //      sprintf(buf, "L=%d R=%d\r\n", LA_SPEED, RA_SPEED);
 //          wireless_uart_send_string(buf);

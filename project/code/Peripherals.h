@@ -36,7 +36,7 @@ extern float SERVO_MOTOR_RMAX; 		 //(85)
 #define Laser_right IO_P67
 
 
-#define FREQ               (50)                                                // ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½Îª50HZï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½300HZ
+#define FREQ               (50)                                                // ¿ØÖÆÆµÂÊÎª50HZ£¬×î¸ßÖ§³Ö300HZ
 #define Esc_PWM_1          (PWMF_CH3_PA5)
 #define Esc_PWM_2          (PWMF_CH4_PA7)
 
@@ -98,9 +98,9 @@ typedef struct {
 
 
 typedef struct {
-    float pitch; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    float roll; //ï¿½ï¿½ï¿½ï¿½ï¿½
-    float yaw; //Æ«ï¿½ï¿½ï¿½ï¿½
+    float pitch; //¸©Ñö½Ç
+    float roll; //ºá¹ö½Ç
+    float yaw; //Æ«º½½Ç
     float last_yaw;
     int8 Dirchange;
 } euler_param_t;

@@ -434,8 +434,8 @@ uint8 checkRightRoundaboutExit(void)
 {
     if (l_start == 0) return 0;
     if (r_start == 0) return 0;
-    if ((IMAGE_H_SMALL - 1 - l_start) < 13 &&
-        (IMAGE_H_SMALL - 1 - r_start) < 13)
+    if ((IMAGE_H_SMALL - 1 - l_start) < 10 &&
+        (IMAGE_H_SMALL - 1 - r_start) < 10)
     {
         return 1;
     }

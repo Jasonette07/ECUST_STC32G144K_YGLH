@@ -612,10 +612,10 @@ void imageProcess(void)
     search_white(&mt9v03x_image[IMAGE_H - 1][1], MT9V03X_W - 2);
     search_longest_white_col_small();                                              
     search_border_small(); 
-    //crossroadState();	
-    //roundaboutState();
+    crossroadState();	
+    roundaboutState();
 	//zebraState();
-    //targetStateMachine();
+    targetStateMachine();
     middleLine();                                               
     GetDet();                                                   
 //    if (check_out_of_track(4) == 1)
