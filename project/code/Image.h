@@ -40,9 +40,9 @@
 #define WH_START_ROW            57                          // 行搜索起点 
 #define WH_NEXT_OFFSET          5                           // 下一列起点偏移: 
 // 前瞻行配置
-#define TOWPOINT_NORMAL         45                          // 正常前瞻行
-#define TOWPOINT_CROSS          45                          // 十字路口前瞻行
-#define TOWPOINT_ROUND          45                         // 圆环前瞻行
+#define TOWPOINT_NORMAL         28                          // 正常前瞻行
+#define TOWPOINT_CROSS          38                          // 十字路口前瞻行
+#define TOWPOINT_ROUND          35                         // 圆环前瞻行
 #define TOWPOINT_WINDOW         4                           // 前瞻窗口半径
 
 //#define OUT_GRAY_THRESHOLD   80  //出界灰度阈值

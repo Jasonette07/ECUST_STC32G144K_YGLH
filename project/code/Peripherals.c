@@ -1,5 +1,5 @@
 #include "zf_common_headfile.h"
-//---------------------------------ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//---------------------------------·äÃùÆ÷
 void Buzzer_init(void)
 {
 	gpio_init(Buzzer_pin,GPO,0,GPO_PUSH_PULL);
@@ -10,7 +10,7 @@ void Buzzer_check(int ms)
 	system_delay_ms(ms);
 	gpio_set_level(Buzzer_pin,0);                                                                                                                                                                                                                             
 } 
-void Buzzer_check1(int ms)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½          
+void Buzzer_check1(int ms)//·Ç×èÈûÊ½          
 {
     gpio_set_level(Buzzer_pin, 1);
     buzzer_remain_ms = ms;            
@@ -28,7 +28,7 @@ void LED_init(void)
 {
 	gpio_init(LED_pin,GPO,0,GPO_PUSH_PULL);
 }
-//---------------------------------ï¿½ï¿½ï¿½ï¿½
+//---------------------------------°´¼ü
 uint8 key1_state = 1;                                                              
 uint8 key2_state = 1;                                                               
 uint8 key3_state = 1;                                                               
@@ -68,7 +68,7 @@ void Key_scan(void)
 	if(key4_state && !key4_state_last)   {key4_flag = 1;}
 
 }
-//ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+//ÇåÁã±êÖ¾Î»
 void KEY1_clear(void)
 {
 	
@@ -95,7 +95,7 @@ void KEY4_clear(void)
 	key4_flag = 0;
 	
 }
-//---------------------------------ï¿½ï¿½ï¿½
+//---------------------------------µçµ÷
 uint16 duty = 0;
 
 void Esc_init()
@@ -111,7 +111,7 @@ void Esc_set(int duty)
     pwm_set_duty(Esc_PWM_2,duty);
     
 }
-//---------------------------------ï¿½ï¿½ï¿½
+//---------------------------------¶æ»ú
 float SERVO_MOTOR_LMAX = 120 ;		 //(120)
 float SERVO_MOTOR_RMAX = 85 ;		 //(85)
 void Steer_init(void)
@@ -125,7 +125,7 @@ void Steer_set(float angle)
 	  pwm_set_duty(SERVO_MOTOR_PWM,(uint32)SERVO_MOTOR_DUTY(angle));
 }
 
-//---------------------------------	ï¿½ï¿½ï¿½
+//---------------------------------	µç»ú
 void DRV8701_init()
 {
 	gpio_init(L_DIR,GPO,1,GPO_PUSH_PULL);
@@ -137,31 +137,31 @@ void DRV8701_ctrl(int16 L_SPEED,int16 R_SPEED)
 {
 	L_SPEED=L_SPEED>M_MAX?M_MAX:(L_SPEED<M_MIN)?M_MIN:L_SPEED;
 	R_SPEED=R_SPEED>M_MAX?M_MAX:(R_SPEED<M_MIN)?M_MIN:R_SPEED;
-	if(L_SPEED>0)//ï¿½ï¿½ï¿½ï¿½×ª
+	if(L_SPEED>0)//×óÕý×ª
 	{
 		gpio_set_level (L_DIR, 0);
 		pwm_set_duty  (L_PWM, L_SPEED);
 	}
-	else//ï¿½ï¿½×ª
+	else//×ó·´×ª
 	{
 		gpio_set_level (L_DIR, 1);
 		pwm_set_duty  (L_PWM, -L_SPEED);
 	}
-	if(R_SPEED>0)//ï¿½ï¿½ï¿½ï¿½×ª
+	if(R_SPEED>0)//ÓÒÕý×ª
 	{
 		gpio_set_level (R_DIR, 0);
 		pwm_set_duty  (R_PWM,R_SPEED);
 	}
-	else//ï¿½Ò·ï¿½×ª
+	else//ÓÒ·´×ª
 	{
 		gpio_set_level (R_DIR, 1);
 		pwm_set_duty  (R_PWM, -R_SPEED);
 	}
 	
 }
-//--------------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-int16 LA_SPEED=0;//ï¿½ï¿½Êµï¿½ï¿½ï¿½Ù¶ï¿½
-int16 RA_SPEED=0;//ï¿½ï¿½Êµï¿½ï¿½ï¿½Ù¶ï¿½
+//--------------------------------- Õý½»±àÂëÆ÷
+int16 LA_SPEED=0;//×óÊµ¼ÊËÙ¶È
+int16 RA_SPEED=0;//ÓÒÊµ¼ÊËÙ¶È
 void encoder_init()
 {
 	encoder_quad_init(ENCODER_QUAD_1, ENCODER_QUAD_1_CHA, ENCODER_QUAD_1_CHB);   
@@ -205,33 +205,33 @@ void Wireless_Cmd_Process(void)
     {
         switch (cmd_dat)
         {
-            case 'g':       //'g' = go ï¿½ï¿½ï¿½ï¿½
+            case 'g':       //'g' = go ·¢³µ
             case 'G':
                 car_run_flag = 1;
                 Buzzer_check1(50);
                 wireless_uart_send_string("Car GO\r\n");
                 break;
             
-            case 's':       //'s' = stop Í£ï¿½ï¿½
+            case 's':       //'s' = stop Í£³µ
             case 'S':
                 car_run_flag = 0;
                 Buzzer_check1(50);
                 wireless_uart_send_string("Car STOP\r\n");
                 break;
             
-            case 'b':       //'b' = buzzer ï¿½ï¿½ï¿½ï¿½
+            case 'b':       //'b' = buzzer ·äÃù
             case 'B':
                 Buzzer_check1(200);
                 wireless_uart_send_string("Beep\r\n");
                 break;
             
-            case '+':       //ï¿½ï¿½ï¿½ï¿½
+            case '+':       //¼ÓËÙ
                 Target_Speed_test += 10.0f;
                 sprintf(wireless_buf, "Speed=%.1f\r\n", Target_Speed_test);
                 wireless_uart_send_string(wireless_buf);
                 break;
             
-            case '-':       //ï¿½ï¿½ï¿½ï¿½
+            case '-':       //¼õËÙ
                 Target_Speed_test -= 10.0f;
                 sprintf(wireless_buf, "Speed=%.1f\r\n", Target_Speed_test);
                 wireless_uart_send_string(wireless_buf);
@@ -242,7 +242,7 @@ void Wireless_Cmd_Process(void)
         }
     }
 }
-//-------------------------------ï¿½ï¿½ï¿½ï¿½
+//-------------------------------¼¤¹â
 void laser_init(void)
 {
 	gpio_init(Laser_mid, GPO, 0, GPO_PUSH_PULL);
@@ -285,10 +285,10 @@ void laser_off()
 	laser_mid_off();						
 }
 
-//--------------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//--------------------------------- ÍÓÂÝÒÇ
 gyro_param_t GyroOffset;
 euler_param_t eulerAngle;
-void gyroOffset_init(void)//ï¿½ï¿½Æ¯ï¿½ï¿½Ê¼ï¿½ï¿½
+void gyroOffset_init(void)//ÁãÆ¯³õÊ¼»¯
 {
     uint16 i;
     GyroOffset.Xdata = 0;
@@ -315,7 +315,7 @@ void gyroOffset_init(void)//ï¿½ï¿½Æ¯ï¿½ï¿½Ê¼ï¿½ï¿½
 	system_delay_ms(500);
 
 }
-//ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½
+//¼ÆËãÆ«º½½Ç
 float yaw_total = 0;
 float current_gyro_z_dps = 0;
 void Gyro_Update(void)
@@ -337,7 +337,7 @@ volatile uint8 print_flag = 0;
 char print_buf[32];
 void Timer(void)
 {
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
+    //·äÃùÆ÷µ¹¼ÆÊ±
     if (buzzer_remain_ms > 0)
     {
         if (buzzer_remain_ms <= 5)
@@ -351,13 +351,13 @@ void Timer(void)
         }
     }
     
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
+    //·¢³µµ¹¼ÆÊ±
     if (start_delay_ms > 0)
     {
         if (start_delay_ms <= 5)
         {
             start_delay_ms = 0;
-            car_run_flag = 1;       //Ê±ï¿½äµ½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
+            car_run_flag = 1;       //Ê±¼äµ½×Ô¶¯·¢³µ
         }
         else
         {
@@ -365,20 +365,20 @@ void Timer(void)
         }
     }
 
-    //ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½Ê± (200ms Ò»ï¿½ï¿½)
+    //´òÓ¡µ¹¼ÆÊ± (200ms Ò»´Î)
     if (print_interval_ms > 0)
     {
         print_interval_ms -= 5;
     }
     else
     {
-        print_interval_ms = 200;     //ï¿½ï¿½ï¿½ï¿½ 200ms
-        print_flag = 1;              //ï¿½ï¿½Î»,Í¨Öªï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½Ó¡
+        print_interval_ms = 200;     //ÖØÖÃ 200ms
+        print_flag = 1;              //ÖÃÎ»,Í¨ÖªÖ÷Ñ­»·¿ÉÒÔ´òÓ¡
     }
 }
 
-//----------------------------------------------------------------------------------ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½
-void Steer_text(void)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//----------------------------------------------------------------------------------²âÊÔº¯Êý
+void Steer_text(void)//¶æ»ú²âÊÔ
 {
 
        static int32 angle=SERVO_MOTOR_MID;
@@ -398,13 +398,13 @@ void Steer_text(void)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
              {
                  key3_flag=0;
                  angle+=1;
-    //             angle=55;//ï¿½ï¿½ï¿½ï¿½ï¿½
+    //             angle=55;//×ó´òËÀ
              }
           if(key4_flag)
              {
                  key4_flag=0;
                 angle-=1;
-    //             angle=85;//ï¿½Ò´ï¿½ï¿½ï¿½
+    //             angle=85;//ÓÒ´òËÀ
              }
 
 

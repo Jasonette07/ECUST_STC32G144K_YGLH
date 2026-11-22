@@ -38,7 +38,7 @@ void pid_init(void)
         RM_PID.out = 0.0f;
 
 		Servo_PID.Kp=0.0f;
-        Servo_PID.Kp2 =0.0f;  
+        Servo_PID.Kp2 =0.003f;  
         Servo_PID.Kd=0.0f; 
         Servo_PID.Gyro_Kd = 0.005f;
 
@@ -229,9 +229,9 @@ int16 limit_float(int16 x, int16 y)
 float ERROR_MAX = 27.0;                         //误差最大值
 float DEDT_MAX = 6.0;                           //误差变化率最大值
 float KP_Fuzzy = 2.3;                           //kp模糊值
-float KD_Fuzzy = 0.0;                          //kd模糊值
+float KD_Fuzzy = 3.0;                          //kd模糊值
 
-float KP_Base = 0.2;                              //kp基础值
+float KP_Base = 0.5;                              //kp基础值
 float KD_Base = 0.0;                              //kd基础值
 /* WWWWWWWWWWWWWWWWWWWWWWWWWWWW Error论域 WWWWWWWWWWWWWWWWWWWWWWWWWWWWW */
 

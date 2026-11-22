@@ -16,11 +16,11 @@ typedef struct {
 #define LDISTANCE 200.0f 
 #define BORDWIDTH 150.0f 
 #define STEERING_RATIO   2.626f  
-#define speed 135.0f  
+#define speed 145.0f  
 #define SPEED_TO_MMPS   40.0f       
 #define RAD_TO_DEG      57.2958f  
 #define DEG_TO_RAD      0.01745f    
-#define ACK_COEFF_DEFAULT       1.5f    
+#define ACK_COEFF_DEFAULT       1.0f    
 #define ACK_COEFF_ROUNDABOUT    1.5f     
 #define ACK_COEFF_CROSSROAD     1.5f     
 // void Servo_Control_Process(float Image_err);
